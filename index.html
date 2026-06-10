@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Makes the page scale correctly on mobile screens -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+
+    <!-- Link to our stylesheet (we'll create this in Step 2) -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- ================================================
+         HEADER
+         Just the app name/brand at the top of the page
+    ================================================ -->
+    <header class="site-header">
+      <h1 class="app-title">WeatherNow</h1>
+    </header>
+
+
+    <!-- ================================================
+         MAIN CONTENT
+         Everything the user interacts with lives here
+    ================================================ -->
+    <main class="main-content">
+
+
+      <!-- SEARCH SECTION
+           The input box and button where users type a city name.
+           When the button is clicked, JavaScript will read whatever
+           is typed in #city-input and send it to the weather API.
+      -->
+      <section class="search-section">
+        <div class="search-bar">
+
+          <!-- The text field - id="city-input" lets JS grab its value -->
+          <input
+            type="text"
+            id="city-input"
+            class="city-input"
+            placeholder="Enter a city name..."
+            autocomplete="off"
+          />
+
+          <!-- The search button - JS will listen for clicks on this -->
+          <button id="search-btn" class="search-btn">Search</button>
+
+        </div>
+      </section>
+
+
+      <!-- STATUS SECTION
+           This section handles two situations:
+             1. Loading state  → "Fetching weather..."
+             2. Error state    → "City not found." or "Something went wrong."
+
+           It starts hidden (the [hidden] attribute).
+           JavaScript will remove [hidden] and set the message text
+           whenever it needs to show the user something.
+      -->
+      <section class="status-section" id="status-section" hidden>
+        <p id="status-message" class="status-message"></p>
+      </section>
+
+
+      <!-- WEATHER CARD SECTION
+           This is where the actual weather data gets displayed.
+           It also starts hidden — JS will reveal it only after
+           a successful API response, then fill in all the IDs below
+           with real data (city name, temperature, humidity, etc.)
+      -->
+      <section class="weather-section" id="weather-section" hidden>
+        <div class="weather-card">
+
+          <!-- City name + country code e.g. "Lagos" + "NG" -->
+          <div class="weather-location">
+            <h2 id="city-name" class="city-name"></h2>
+            <span id="country-code" class="country-code"></span>
+          </div>
+
+          <!-- Weather icon (image from OpenWeatherMap) + temperature -->
+          <!-- The icon src will be built by JS using the icon code from the API -->
+          <div class="weather-main">
+            <img id="weather-icon" class="weather-icon" src="" alt="" />
+            <p id="temperature" class="temperature"></p>
+          </div>
+
+          <!-- Short weather description e.g. "light rain", "clear sky" -->
+          <p id="weather-description" class="weather-description"></p>
+
+          <!-- Extra detail items — each has a label and a value.
+               JS will fill in the value spans with data from the API. -->
+          <div class="weather-details">
+
+            <div class="detail-item">
+              <span class="detail-label">Feels Like</span>
+              <span id="feels-like" class="detail-value"></span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Humidity</span>
+              <span id="humidity" class="detail-value"></span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Wind</span>
+              <span id="wind-speed" class="detail-value"></span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Visibility</span>
+              <span id="visibility" class="detail-value"></span>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- ================================================
+         FOOTER
+         Simple credit line linking to the data source
+    ================================================ -->
+    <footer class="site-footer">
+      <p>Powered by <a href="https://openweathermap.org" target="_blank">OpenWeatherMap</a></p>
+    </footer>
+
+
+    <!-- Script tag goes at the BOTTOM of body — not in <head>.
+         Reason: the browser reads HTML top to bottom. If JS runs
+         before the elements above exist, it can't find them.
+         Putting the script here means all the HTML is ready first. -->
+    <script src="app.js"></script>
+
+  </body>
+</html>

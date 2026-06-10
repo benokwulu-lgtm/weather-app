@@ -1,0 +1,332 @@
+/* ================================================
+   IMPORTS
+   We're pulling in a font from Google Fonts.
+   'Inter' is clean and modern — great for data-heavy UIs.
+================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+/* ================================================
+   CSS VARIABLES (Custom Properties)
+   Define all colors and values in one place here.
+   If you ever want to change the theme, you only
+   edit this block — not hunt through the whole file.
+================================================ */
+:root {
+  --bg-primary: #0f1117;        /* Main page background — deep dark navy */
+  --bg-card: #1c1f2e;           /* Weather card background — slightly lighter */
+  --bg-input: #252837;          /* Input field background */
+  --accent: #4f8ef7;            /* Blue accent — buttons, highlights */
+  --accent-hover: #3a7ae0;      /* Slightly darker blue for hover states */
+  --text-primary: #f0f2f5;      /* Main text — near white */
+  --text-secondary: #8b92a5;    /* Muted text — labels, footer */
+  --text-description: #c5cad6;  /* Weather description text */
+  --border: #2e3247;            /* Subtle borders */
+  --error: #f87171;             /* Red for error messages */
+  --status: #facc15;            /* Yellow for loading messages */
+  --radius: 16px;               /* Consistent border-radius throughout */
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4); /* Card drop shadow */
+}
+
+
+/* ================================================
+   RESET & BASE
+   Browsers apply their own default margins, paddings,
+   and box-sizing rules. We reset them here so we're
+   starting from a clean, predictable baseline.
+================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  /* border-box means padding/border are included in
+     an element's total width — much easier to work with */
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;            /* Page always fills the full screen height */
+  display: flex;
+  flex-direction: column;       /* Stack header, main, footer vertically */
+}
+
+
+/* ================================================
+   HEADER
+================================================ */
+.site-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+
+/* The dot after the title — a small accent detail */
+.app-title::after {
+  content: '.';
+  color: var(--accent);
+}
+
+
+/* ================================================
+   MAIN CONTENT
+   flex: 1 makes main expand to fill all available
+   space between header and footer — so the footer
+   always stays at the bottom even on short pages.
+================================================ */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;          /* Center everything horizontally */
+  padding: 20px;
+  gap: 24px;                    /* Space between search, status, and card */
+}
+
+
+/* ================================================
+   SEARCH SECTION
+================================================ */
+.search-section {
+  width: 100%;
+  max-width: 520px;             /* Cap the width so it doesn't stretch too wide */
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.city-input {
+  flex: 1;                      /* Input grows to fill all available space */
+  padding: 14px 18px;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;                /* Remove default browser focus ring */
+  transition: border-color 0.2s ease;
+}
+
+/* When the user clicks into the input, highlight the border */
+.city-input:focus {
+  border-color: var(--accent);
+}
+
+/* The placeholder text inside the input */
+.city-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-btn {
+  padding: 14px 24px;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;              /* Show a hand cursor on hover */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Darken button on hover */
+.search-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Slight press effect when button is clicked */
+.search-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* ================================================
+   STATUS SECTION
+   Used for both loading messages and error messages.
+   JS will swap the text and class depending on the situation.
+================================================ */
+.status-section {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.status-message {
+  font-size: 0.95rem;
+  color: var(--status);         /* Default: yellow for loading */
+  padding: 12px;
+  border-radius: var(--radius);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+/* JS will add this class when there's an error — turns text red */
+.status-message.error {
+  color: var(--error);
+}
+
+
+/* ================================================
+   WEATHER CARD
+================================================ */
+.weather-section {
+  width: 100%;
+  max-width: 520px;
+}
+
+.weather-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;                    /* Space between each row inside the card */
+  text-align: center;
+}
+
+
+/* City name + country code row */
+.weather-location {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.city-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.country-code {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+
+/* Icon + temperature row */
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weather-icon {
+  width: 72px;
+  height: 72px;
+}
+
+.temperature {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+
+/* e.g. "light rain" */
+.weather-description {
+  font-size: 1rem;
+  color: var(--text-description);
+  text-transform: capitalize;   /* "light rain" → "Light rain" */
+  margin-top: -4px;
+}
+
+
+/* ================================================
+   WEATHER DETAILS GRID
+   4 items displayed in a 2x2 grid (or 4 columns
+   on wider screens) — Feels Like, Humidity, Wind,
+   Visibility.
+================================================ */
+.weather-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* 2 columns */
+  gap: 12px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.detail-item {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+
+/* ================================================
+   FOOTER
+================================================ */
+.site-footer {
+  text-align: center;
+  padding: 24px 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================================
+   RESPONSIVE — MOBILE
+   On small screens (under 480px), stack the search
+   button below the input instead of side by side,
+   and tighten up some sizing.
+================================================ */
+@media (max-width: 480px) {
+
+  .app-title {
+    font-size: 1.6rem;
+  }
+
+  /* Stack input and button vertically on mobile */
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .temperature {
+    font-size: 2.8rem;
+  }
+
+  .weather-card {
+    padding: 24px 18px;
+  }
+}
